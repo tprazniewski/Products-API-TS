@@ -20,5 +20,10 @@ export const updateValidator: ValidationChain[] = [
     .withMessage("The name field is mandatory")
     .isLength({ max: 100 })
     .withMessage("The name field length can't be higher than 100"),
-  body("price").trim().isNumeric().withMessage("Only Decimals allowed"),
+  body("price")
+    .trim()
+    .isNumeric()
+    .withMessage("Only Decimals allowed")
+    .isLength({ max: 8 })
+    .withMessage("The name field length can't be higher than 99999999"),
 ];

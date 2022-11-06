@@ -40,6 +40,9 @@ export const addProduct: RequestHandler = async (req, res) => {
   }
 };
 export const updateProduct: RequestHandler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).send(errors.array());
+
   const { id, name, price } = req.body;
 
   const product = await Product.findOneBy({
@@ -48,8 +51,7 @@ export const updateProduct: RequestHandler = async (req, res) => {
   product!.name = name;
   product!.price = price;
   product?.save();
-  console.log(product);
-  res.status(200).send({ message: "You Apdated product" });
+  return res.status(200).send({ message: "You Apdated product" });
 };
 export const deleteProduct: RequestHandler = async (req, res) => {
   const { id } = req.params;

@@ -32,3 +32,10 @@ export const updateValidator: ValidationChain[] = [
     .isLength({ max: 8 })
     .withMessage("The name field length can't be higher than 99999999"),
 ];
+
+export const deleteValidator: ValidationChain[] = [
+  body("id")
+    .trim()
+    .isNumeric()
+    .withMessage("The id field is mandatory and must be a number"),
+];

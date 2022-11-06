@@ -20,8 +20,19 @@ export const getAllProducts: RequestHandler = async (req, res) => {
     return res.status(500).send({ err: "Internal server error" });
   }
 };
-export const addProduct: RequestHandler = (req, res) => {
-  res.status(200).send({ message: "You added product" });
+export const addProduct: RequestHandler = async (req, res) => {
+  const { name, price } = req.body;
+
+  try {
+    const product = Product.create({
+      name,
+      price,
+    });
+    await product.save();
+    return res.status(201).send(product);
+  } catch (error) {
+    return res.status(500).send({ err: "Internal server error" });
+  }
 };
 export const updateProduct: RequestHandler = (req, res) => {
   res.status(200).send({ message: "You Apdated product" });

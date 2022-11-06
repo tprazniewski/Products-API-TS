@@ -37,6 +37,12 @@ export const addProduct: RequestHandler = async (req, res) => {
 export const updateProduct: RequestHandler = (req, res) => {
   res.status(200).send({ message: "You Apdated product" });
 };
-export const deleteProduct: RequestHandler = (req, res) => {
-  res.status(200).send({ message: "You Updated Prduct" });
+export const deleteProduct: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.delete(parseInt(id));
+    return res.status(204).send({ message: " Product was deleted" });
+  } catch (error) {
+    return res.status(500).send({ err: "Internal server error" });
+  }
 };

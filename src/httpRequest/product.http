@@ -2,7 +2,7 @@ GET http://localhost:666/products
 Content-Type: application/json
 
 
-GET http://localhost:666/products/1
+GET http://localhost:666/products/3
 Content-Type: application/json
 DELETE http://localhost:666/products/2
 Content-Type: application/json
@@ -12,5 +12,12 @@ POST http://localhost:666/products
 Content-Type: application/json
 {
     "name": "chair",
-    "price": "50"
+    "price": "500000.505050"
+}
+PUT http://localhost:666/products
+Content-Type: application/json
+{
+    "id": "3",
+    "name": "chair",
+    "price": "100000000000"
 }

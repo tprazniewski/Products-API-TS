@@ -6,12 +6,13 @@ import {
   deleteProduct,
   updateProduct,
 } from "../controllers/product";
+import { createValidator, updateValidator } from "../utils/productValdiator";
 const router = Router();
 
 router.get("/:id", getProduct);
 router.get("/", getAllProducts);
-router.post("/", addProduct);
+router.post("/", createValidator, addProduct);
 router.delete("/:id", deleteProduct);
-router.patch("/", updateProduct);
+router.put("/", updateValidator, updateProduct);
 
 export default router;

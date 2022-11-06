@@ -1,5 +1,7 @@
 import { Request, Response, RequestHandler } from "express";
 import { Product } from "../entities/product";
+import { appDataSource } from "../DB/mysql";
+import { validationResult } from "express-validator";
 
 export const getProduct: RequestHandler = async (req, res) => {
   const { id } = req.params;
@@ -21,6 +23,9 @@ export const getAllProducts: RequestHandler = async (req, res) => {
   }
 };
 export const addProduct: RequestHandler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).send(errors.array());
+
   const { name, price } = req.body;
 
   try {
@@ -34,7 +39,16 @@ export const addProduct: RequestHandler = async (req, res) => {
     return res.status(500).send({ err: "Internal server error" });
   }
 };
-export const updateProduct: RequestHandler = (req, res) => {
+export const updateProduct: RequestHandler = async (req, res) => {
+  const { id, name, price } = req.body;
+
+  const product = await Product.findOneBy({
+    id: parseInt(id),
+  });
+  product!.name = name;
+  product!.price = price;
+  product?.save();
+  console.log(product);
   res.status(200).send({ message: "You Apdated product" });
 };
 export const deleteProduct: RequestHandler = async (req, res) => {

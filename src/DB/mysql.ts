@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 import { Product } from "../entities/product";
-
 dotenv.config();
+
 export const appDataSource = new DataSource({
   type: "mysql",
   host: process.env.DB_HOST,
